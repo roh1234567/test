@@ -5,7 +5,8 @@ pipeline {
             steps {
                 // Clone the Git repository
                 checkout scm
-                // Execute the Groovy script
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], 
+                          userRemoteConfigs: [[url: 'https://github.com/roh1234567/test.git']]])
                 script {
                     // Provide the relative path to the Groovy file
                     def groovyFilePath = "test/test.groovy"
