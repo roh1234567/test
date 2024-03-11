@@ -1,9 +1,8 @@
 pipeline {
     agent {
-        docker {
-            image 'Python 3.12.2'
-            args '--user 0:0'
-        }
+        agent {
+        label 'docker'
+    }
     }
 
     environment {
