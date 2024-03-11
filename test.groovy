@@ -2,7 +2,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-class YourSnowflakeConnectionTestScript {
+class test {
     static void main(String[] args) {
         // JDBC connection parameters
         String url = "jdbc:snowflake:https://ceudjkl-ib64558.snowflakecomputing.com/";
