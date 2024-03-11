@@ -9,7 +9,7 @@ pipeline {
                           userRemoteConfigs: [[url: 'https://github.com/roh1234567/test.git']]])
                 script {
                     // Provide the relative path to the Groovy file
-                    def groovyFilePath = "test/test.groovy"
+                    def groovyFilePath = "test.groovy"
                     // Execute the Groovy file
                     sh "groovy ${groovyFilePath}"
                 }
