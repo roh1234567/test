@@ -16,6 +16,7 @@ pipeline {
                             // Install Snowflake JDBC driver (if not done already)
                             bat 'curl -O https://repo1.maven.org/maven2/net/snowflake/snowflake-jdbc/3.12.5/snowflake-jdbc-3.12.5.jar'
                             // Download and place other_dependency2.jar in the same directory
+                            echo "Workspace path: ${WORKSPACE}"
                             bat 'curl -O https://example.com/path/to/other_dependency2.jar'
                             // Get the path to the Groovy script
                             def groovyScriptPath = bat(script: 'echo %WORKSPACE%\\test.groovy', returnStdout: true).trim()
