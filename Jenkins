@@ -2,19 +2,15 @@ pipeline {
     agent any
 
     stages {
-        stage('Check File') {
+        stage('Checkout') {
             steps {
-                script {
-                    def workspacePath = "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\snowflake-test\\test.groovy"
-                    // Execute the dir command to check if the file exists
-                    bat "dir ${workspacePath} > nul"
-                    // Check the errorlevel to determine if the file exists or not
-                    if (bat(returnStatus: true, script: "exit %ERRORLEVEL%") == 0) {
-                        echo "File exists"
-                    } else {
-                        echo "File does not exist"
-                    }
-                }
+                checkout scm
+            }
+        }
+        stage('Run Test') {
+            steps {
+                echo 'Running test.groovy'
+                sh 'groovy test.groovy'
             }
         }
     }
