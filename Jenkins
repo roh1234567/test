@@ -16,9 +16,9 @@ pipeline {
                 script {
                     // Install schemachange
                     dir("${WORKSPACE}") {
-                    // Install schemachange
-                    bat "python -m pip install schemachange --upgrade"
-                }
+                        bat "python -m pip install schemachange --upgrade"
+                    }
+                    
                     // Run schemachange command
                     bat """
                         schemachange -f migrations 
