@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script {
                     // Install schemachange
-                    bat "pip install schemachange --upgrade"
+                    bat "python -m pip install schemachange --upgrade"
                     // Run schemachange command
                     bat """
                         schemachange -f migrations 
