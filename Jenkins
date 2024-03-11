@@ -19,11 +19,9 @@ pipeline {
                             bat 'curl -O https://example.com/path/to/other_dependency2.jar'
                             // Copy test.groovy to workspace
                             bat "copy /Y C:\\Users\\dell\\Desktop\\Indigo\\test.groovy %WORKSPACE%"
-                            // Get the path to the Groovy script
-                            def groovyScriptPath = bat(script: 'echo %WORKSPACE%\\test.groovy', returnStdout: true).trim()
-                            // Execute the Groovy script
+                            // Execute the Groovy script using Groovy interpreter
                             bat '''
-                                java -cp "snowflake-jdbc-3.12.5.jar;other_dependency2.jar;%WORKSPACE%" test
+                                groovy %WORKSPACE%\\test.groovy
                             '''
                         }
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
