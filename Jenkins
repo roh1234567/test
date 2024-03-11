@@ -4,13 +4,20 @@ pipeline {
             image "python:3.8"
             args '--user 0:0'
         } 
-
+    }
+    environment {
+        SNOWFLAKE_URL = "https://ceudjkl-ib64558.snowflakecomputing.com"
+        SNOWFLAKE_USERNAME = "ry"
+        SNOWFLAKE_ROLE = "accountadmin"
+        SNOWFLAKE_WAREHOUSE = "compute_wh"
+        SNOWFLAKE_DATABASE = "jenkins"
+        SNOWFLAKE_CHANGE_HISTORY_TABLE = "jenkins.SCHEMACHANGE.CHANGE_HISTORY"
     }
     stages {
         stage('Run schemachange') {
             steps {
                 sh "pip install schemachange --upgrade"
-                sh "schemachange -f migrations -a ${https://ceudjkl-ib64558.snowflakecomputing.com} -u ${ry} -r ${accountadmin} -w ${compute_wh} -d ${jenkins} -c ${jenkins}.SCHEMACHANGE.CHANGE_HISTORY --create-change-history-table"
+                sh "schemachange -f migrations -a '${env.SNOWFLAKE_URL}' -u '${env.SNOWFLAKE_USERNAME}' -r '${env.SNOWFLAKE_ROLE}' -w '${env.SNOWFLAKE_WAREHOUSE}' -d '${env.SNOWFLAKE_DATABASE}' -c '${env.SNOWFLAKE_CHANGE_HISTORY_TABLE}' --create-change-history-table"
             }
         }
     }
