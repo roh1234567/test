@@ -4,7 +4,6 @@ pipeline {
         stage('Build') {
             steps {
                 // Clone the Git repository
-                checkout scm
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], 
                           userRemoteConfigs: [[url: 'https://github.com/roh1234567/test.git']]])
                 script {
