@@ -1,8 +1,9 @@
 pipeline {
     agent {
-        docker { 
+        docker {
             image 'python:3.8'
-        } 
+            args '--user 0:0'
+        }
     }
 
     environment {
@@ -17,21 +18,8 @@ pipeline {
     stages {
         stage('Run schemachange') {
             steps {
-                script {
-                    // Install schemachange
-                        bat "python -m pip install schemachange --upgrade"
-                    // Run schemachange command
-                    bat """
-                        schemachange -f migrations 
-                        -a "${SNOWFLAKE_URL}" 
-                        -u "${SNOWFLAKE_USERNAME}" 
-                        -r "${SNOWFLAKE_ROLE}" 
-                        -w "${SNOWFLAKE_WAREHOUSE}" 
-                        -d "${SNOWFLAKE_DATABASE}" 
-                        -c "${SNOWFLAKE_CHANGE_HISTORY_TABLE}" 
-                        --create-change-history-table
-                    """
-                }
+                sh "pip install schemachange --upgrade"
+                sh "schemachange -f migrations -a '${SNOWFLAKE_URL}' -u '${SNOWFLAKE_USERNAME}' -r '${SNOWFLAKE_ROLE}' -w '${SNOWFLAKE_WAREHOUSE}' -d '${SNOWFLAKE_DATABASE}' -c '${SNOWFLAKE_CHANGE_HISTORY_TABLE}' --create-change-history-table"
             }
         }
     }
