@@ -1,7 +1,9 @@
----
-image: python:3.8
 pipeline {
-    agent any
+    agent {
+        docker { 
+            image 'python:3.8'
+        } 
+    }
 
     environment {
         SNOWFLAKE_URL = "https://ceudjkl-ib64558.snowflakecomputing.com"
@@ -17,10 +19,7 @@ pipeline {
             steps {
                 script {
                     // Install schemachange
-                    dir("${WORKSPACE}") {
                         bat "python -m pip install schemachange --upgrade"
-                    }
-                    
                     // Run schemachange command
                     bat """
                         schemachange -f migrations 
