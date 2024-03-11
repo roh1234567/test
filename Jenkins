@@ -1,29 +1,19 @@
 pipeline {
-    agent {
-        label 'snowflake'
-    }
+    agent any
     environment {
-        SNOWFLAKE_URL = 'https://ceudjkl-ib64558.snowflakecomputing.com'
-        SNOWFLAKE_USERNAME = 'ry'
-        SNOWFLAKE_PASSWORD = 'Admin@123'  // Assuming you store credentials in Jenkins
+        // Define any environment variables needed
     }
     stages {
-        stage('SnowflakeConnectionCheck') {
+        stage('Build') {
             steps {
+                // Clone the Git repository
+                checkout scm
+                // Execute the Groovy script
                 script {
-                    // Install Snowflake JDBC driver (if not done already)
-                    bat 'curl -O https://repo1.maven.org/maven2/net/snowflake/snowflake-jdbc/3.12.5/snowflake-jdbc-3.12.5.jar'
-                    // Download and place other_dependency2.jar in the same directory
-                    bat 'curl -O https://example.com/path/to/other_dependency2.jar'
-                    // Get the path to the Groovy script
-                    def groovyScriptPath = "%WORKSPACE%\\test.groovy"
-                    // Execute the Groovy script
-                    bat '''
-                        java -cp "snowflake-jdbc-3.12.5.jar;other_dependency2.jar;%WORKSPACE%" test.groovy
-                    '''
-                }
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    error 'Failed to connect to Snowflake'
+                    // Provide the relative path to the Groovy file
+                    def groovyFilePath = "test/test.groovy"
+                    // Execute the Groovy file
+                    sh "groovy ${groovyFilePath}"
                 }
             }
         }
