@@ -1,6 +1,6 @@
 pipeline {
     agent any
-  
+
     environment {
         SNOWFLAKE_URL = "https://ceudjkl-ib64558.snowflakecomputing.com"
         SNOWFLAKE_USERNAME = "ry"
@@ -13,8 +13,24 @@ pipeline {
     stages {
         stage('Run schemachange') {
             steps {
-                sh "pip install schemachange --upgrade"
-                sh "schemachange -f migrations -a '${SNOWFLAKE_URL}' -u '${SNOWFLAKE_USERNAME}' -r '${SNOWFLAKE_ROLE}' -w '${SNOWFLAKE_WAREHOUSE}' -d '${SNOWFLAKE_DATABASE}' -c '${SNOWFLAKE_CHANGE_HISTORY_TABLE}' --create-change-history-table"
+                script {
+                    // Install schemachange
+                    //dir("${WORKSPACE}") {
+                        bat "python -m pip install schemachange --upgrade"
+                    //}
+                    
+                    // Run schemachange command
+                    bat """
+                        schemachange -f migrations 
+                        -a "${SNOWFLAKE_URL}" 
+                        -u "${SNOWFLAKE_USERNAME}" 
+                        -r "${SNOWFLAKE_ROLE}" 
+                        -w "${SNOWFLAKE_WAREHOUSE}" 
+                        -d "${SNOWFLAKE_DATABASE}" 
+                        -c "${SNOWFLAKE_CHANGE_HISTORY_TABLE}" 
+                        --create-change-history-table
+                    """
+                }
             }
         }
     }
