@@ -14,8 +14,19 @@ pipeline {
         stage('Run schemachange') {
             steps {
                 script {
-                    sh "pip install schemachange --upgrade"
-                    sh "schemachange -f migrations -a '${SNOWFLAKE_URL}' -u '${SNOWFLAKE_USERNAME}' -r '${SNOWFLAKE_ROLE}' -w '${SNOWFLAKE_WAREHOUSE}' -d '${SNOWFLAKE_DATABASE}' -c '${SNOWFLAKE_CHANGE_HISTORY_TABLE}' --create-change-history-table"
+                    // Install schemachange
+                    bat "pip install schemachange --upgrade"
+                    // Run schemachange command
+                    bat """
+                        schemachange -f migrations 
+                        -a "${SNOWFLAKE_URL}" 
+                        -u "${SNOWFLAKE_USERNAME}" 
+                        -r "${SNOWFLAKE_ROLE}" 
+                        -w "${SNOWFLAKE_WAREHOUSE}" 
+                        -d "${SNOWFLAKE_DATABASE}" 
+                        -c "${SNOWFLAKE_CHANGE_HISTORY_TABLE}" 
+                        --create-change-history-table
+                    """
                 }
             }
         }
