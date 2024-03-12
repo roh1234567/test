@@ -18,8 +18,8 @@ pipeline {
                     // Install schemachange
                     //dir("${WORKSPACE}") {
                         //bat "python -m pip install schemachange --upgrade"
-                        bat "\"C:\\Program Files\\Python312\\python.exe\" -m pip install pandas --only-binary :all: --upgrade"
-                        bat "\"C:\\Program Files\\Python312\\python.exe\" -m pip install schemachange --upgrade"
+                        bat "\"C:\\Program Files\\Python312\\python.exe\" -m pip3 install pandas --only-binary :all: --upgrade"
+                        bat "\"C:\\Program Files\\Python312\\python.exe\" -m pip3 install schemachange --upgrade"
                     //}
                     
                     // Run schemachange command
